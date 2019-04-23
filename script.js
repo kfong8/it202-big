@@ -2,6 +2,7 @@ $(document).ready(function(){
     window.mdc.autoInit();
 
     loadScreen("home");
+
 });
 
 function loadScreen(screenName) {
