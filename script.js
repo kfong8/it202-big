@@ -3,6 +3,9 @@ $(document).ready(function(){
 
     loadScreen("home");
 
+    $("#about").on("click", function(){
+        loadScreen("about");
+    })
 });
 
 function loadScreen(screenName) {
