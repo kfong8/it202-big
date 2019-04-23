@@ -3,6 +3,10 @@ $(document).ready(function(){
 
     loadScreen("home");
 
+    $("#home").on("click", function(){
+        loadScreen("home");
+    })
+
     $("#about").on("click", function(){
         loadScreen("about");
     })
