@@ -1,0 +1,81 @@
+<style>
+        /* Set the size of the div element that contains the map */
+        #map {
+          height: 400px;  /* The height is 400 pixels */
+          width: 100%;  /* The width is the width of the web page */
+        }
+      </style>
+      <h2>Crimes within 500 meters of your current location</h6>
+      <!--The div element for the map -->
+      <div id="map"></div>
+      <div id="history"></div>
+      
+      <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+      
+      <script>
+        var myLat;
+        var myLong;
+        var db = new Dexie("locations_database");
+        db.version(1).stores({
+          locations: 'latitude, longitude'
+        });
+      
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else { 
+          console.log("Geolocation is not supported by this browser.");
+        }
+      
+      function showPosition(position) {
+        console.log("got here");
+        myLat = position.coords.latitude; 
+        myLong = position.coords.longitude;
+        console.log(myLat);
+        db.locations.put({latitude: position.coords.latitude, longitude: position.coords.longitude});
+        getData(myLat, myLong);
+      }
+      
+        var map;
+        // Initialize and add the map
+        function initMap() {
+          // The location of Chicago
+          var chicago = {lat: 41.8781, lng: -87.6298};
+          // The map, centered at Chicago
+          map = new google.maps.Map(
+              document.getElementById('map'), {zoom: 12, center: chicago});
+        }
+      
+        function getData(myLatitude, myLongitude){
+          var url = "https://data.cityofchicago.org/resource/crimes.json?";
+      
+          
+          var endpoint = url + "$where=within_circle(location," + myLatitude + "," + myLongitude + ",500)";
+      
+          $.get(endpoint, function(response){
+            var data = response;
+            createMarkers(data);
+          })
+        }
+      
+        function createMarkers(data){
+          $.each(data, function(i,v){
+            var location = {lat: parseFloat(v.latitude), lng: parseFloat(v.longitude) }
+            var marker = new google.maps.Marker({position: location, map: map});
+          })
+        }
+      
+        function showHistory(){
+          $("#history").empty();
+          $("#history").append($("<h2>").text("Recent Locations"));
+          db.locations.each(function(location){
+            var info = "Latitude: " + location.latitude + "        Longitude: " + location.longitude;
+            $("#history").append($("<p>").text(info));
+          })
+        }
+      
+        showHistory();
+      </script>
+      
+      <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa4dMSOASs_iLQnhrPoQ8EZgj2Im_pZ7o&callback=initMap">
+      </script>

@@ -1,19 +1,19 @@
-$(document).ready(function(){
-    window.mdc.autoInit();
+window.mdc.autoInit();
 
-    loadScreen("home");
+$("#content").load("home.html");
 
-    $("#home").on("click", function(){
-        loadScreen("home");
-    })
+$("#home").on("click",function(){
+  $("#content").load("home.html");
+})
 
-    $("#about").on("click", function(){
-        loadScreen("about");
-    })
-});
+$("#crimes").on("click",function(){
+  $("#content").load("crimes.html");
+})
 
-function loadScreen(screenName) {
-    $("#content").load("" + screenName + ".html", function () {
-      console.log("------ Screen load: " + screenName);
-    });
-}
+$("#stations").on("click",function(){
+  $("#content").load("stations.html");
+})
+
+$("#about").on("click",function(){
+  $("#content").load("about.html");
+})

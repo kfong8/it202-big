@@ -1,0 +1,25 @@
+<style>
+        .template{
+          display: none;
+        }
+      </style>
+      
+      <div id="screenContent">
+        <ul class="mdc-list demo-list mdc-list--two-line">
+          <li class="template mdc-list-item mdc-ripple-upgraded" tabindex="-1"><span class="mdc-list-item__text"><span class="mdc-list-item__primary-text">Line item</span><span class="mdc-list-item__secondary-text">Secondary text</span></span></li>
+        </ul>
+      </div>
+      
+      <script>
+      var endpoint = "https://data.cityofchicago.org/resource/9rg7-mz9y.json?&$ORDER=district";
+      $.get(endpoint, function(response) {
+        $.each(response, function(i,v) {
+          var clone = $("#screenContent li.template").clone();
+          clone.find(".mdc-list-item__primary-text").text("District " + v.district + " (" + v.district_name + ")");
+          clone.find(".mdc-list-item__secondary-text").text(v.address);
+          clone.removeClass("template");
+          clone.attr("id", v.district);
+          $("#screenContent ul").append(clone);  
+        });
+      });
+      </script>

@@ -1,0 +1,14 @@
+{
+    "name": "Crime Viewer",
+    "short_name": "Crime Viewer",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "navy",
+    "description": "Chicago Crime Viewer",
+    "icons": [{
+      "src": "./cpd.png",
+      "sizes": "300x300",
+      "type": "image/png"
+    }],
+    "related_applications": []
+  }
