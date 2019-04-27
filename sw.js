@@ -1,3 +1,4 @@
+var cacheName = 'cw-v1';
 var appShellFiles = [
   "./index.html",
   "./about.html",
